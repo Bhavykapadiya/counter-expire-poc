@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown Timer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 50px;
+    }
+    .countdown {
+      font-size: 2em;
+      margin: 20px;
+    }
+    #content {
+      display: block; /* Content is visible initially */
+    }
+    #expired-message {
+      display: none; /* Expiration message is hidden initially */
+    }
+  </style>
+</head>
+<body>
+  <div id="content">
+    <h1>Countdown to Event</h1>
+    <div class="countdown" id="countdown">
+      <span id="days"></span> Days 
+      <span id="hours"></span> Hours 
+      <span id="minutes"></span> Minutes 
+      <span id="seconds"></span> Seconds
+    </div>
+  </div>
+
+  <!-- Expiration message -->
+  <div id="expired-message">
+    <h1>The Event has expired!</h1>
+  </div>
+
+  <script>
+    // Set the target date and time (example: December 31, 2024 00:00:00)
+    const targetDate = new Date("Octomber 10, 2024 18:49:00").getTime();
+
+    // Update the countdown every 1 second
+    const countdownInterval = setInterval(function() {
+      
+      // Get current date and time
+      const now = new Date().getTime();
+
+      // Calculate the distance between now and the target date
+      const distance = targetDate - now;
+
+      // Time calculations for days, hours, minutes, and seconds
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Display the result in the corresponding elements
+      document.getElementById("days").innerHTML = days;
+      document.getElementById("hours").innerHTML = hours;
+      document.getElementById("minutes").innerHTML = minutes;
+      document.getElementById("seconds").innerHTML = seconds;
+
+      // If the countdown is finished, hide the content and show expiration message
+      if (distance < 0) {
+        clearInterval(countdownInterval);
+
+        // Hide the content and show the expiration message
+        document.getElementById("content").style.display = "none";
+        document.getElementById("expired-message").style.display = "block";
+
+        // Optionally, you can block access by redirecting to another page
+        // window.location.href = "expired.html";  // Uncomment to redirect
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
